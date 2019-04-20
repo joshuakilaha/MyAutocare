@@ -1,4 +1,4 @@
-package com.example.myautocare.Admin.AdminViews.BMW.BMW;
+package com.example.myautocare.Admin.AdminViews.BMW;
 
 
 import com.google.firebase.database.Exclude;
@@ -6,6 +6,7 @@ import com.google.firebase.database.Exclude;
 public class Upload {
     private String mName;
     private String mDescription;
+    private String mprice;
     private String mImageUrl;
     private String mKey;
 
@@ -13,13 +14,14 @@ public class Upload {
         //empty constructor needed
     }
 
-    public Upload(String name, String Description,String imageUrl) {
+    public Upload(String name, String Description,String Price,String imageUrl) {
         if (name.trim().equals("")) {
             name = "No Name";
         }
 
         mName = name;
         mDescription = Description;
+        mprice = Price;
         mImageUrl = imageUrl;
     }
 
@@ -37,6 +39,14 @@ public class Upload {
 
     public void setmDescription(String mDescription) {
         this.mDescription = mDescription;
+    }
+
+    public String getMprice() {
+        return mprice;
+    }
+
+    public void setMprice(String mprice) {
+        this.mprice = mprice;
     }
 
     public String getImageUrl() {

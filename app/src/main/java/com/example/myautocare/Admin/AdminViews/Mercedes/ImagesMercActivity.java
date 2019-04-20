@@ -1,4 +1,4 @@
-package com.example.myautocare.Admin.AdminViews.BMW.BMW;
+package com.example.myautocare.Admin.AdminViews.Mercedes;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,9 +21,10 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImagesActivity extends AppCompatActivity implements ImageAdapter.OnItemClickListener {
+public class ImagesMercActivity extends AppCompatActivity implements ImageAdapterM.OnItemClickListener{
+
     private RecyclerView mRecyclerView;
-    private ImageAdapter mAdapter;
+    private ImageAdapterM mAdapter;
 
     private ProgressBar mProgressCircle;
 
@@ -31,13 +32,13 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
 
-    private List<Upload> mUploads;
+    private List<UploadM> mUploads;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_images);
-
+        setContentView(R.layout.activity_images_merc);
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -46,14 +47,14 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
         mUploads = new ArrayList<>();
 
-        mAdapter = new ImageAdapter(ImagesActivity.this, mUploads);
+        mAdapter = new ImageAdapterM(ImagesMercActivity.this, mUploads);
 
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(ImagesActivity.this);
+        mAdapter.setOnItemClickListener(ImagesMercActivity.this);
 
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsBMW");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsMerc");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -62,7 +63,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 mUploads.clear();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Upload upload = postSnapshot.getValue(Upload.class);
+                    UploadM upload = postSnapshot.getValue(UploadM.class);
                     upload.setKey(postSnapshot.getKey());
                     mUploads.add(upload);
                 }
@@ -74,7 +75,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ImagesActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ImagesMercActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
@@ -92,7 +93,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
     @Override
     public void onDeleteClick(int position) {
-        Upload selectedItem = mUploads.get(position);
+        UploadM selectedItem = mUploads.get(position);
         final String selectedKey = selectedItem.getKey();
 
         StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
@@ -100,7 +101,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
             @Override
             public void onSuccess(Void aVoid) {
                 mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(ImagesActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ImagesMercActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -110,4 +111,5 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         super.onDestroy();
         mDatabaseRef.removeEventListener(mDBListener);
     }
+
 }

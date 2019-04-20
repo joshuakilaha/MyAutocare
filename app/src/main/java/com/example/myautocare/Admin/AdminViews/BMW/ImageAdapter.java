@@ -1,4 +1,4 @@
-package com.example.myautocare.Admin.AdminViews.BMW.BMW;
+package com.example.myautocare.Admin.AdminViews.BMW;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -35,8 +35,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         Upload uploadCurrent = mUploads.get(position);
-        holder.textViewName.setText(uploadCurrent.getName());
-        holder.textViewDescription.setText(uploadCurrent.getmDescription());
+        holder.textViewName.setText("Item: "+ uploadCurrent.getName());
+        holder.textViewDescription.setText("Description: "+uploadCurrent.getmDescription());
+        holder.textViewPrice.setText(" ksh. "+uploadCurrent.getMprice());
+
         Picasso.with(mContext)
                 .load(uploadCurrent.getImageUrl())
                 .placeholder(R.mipmap.ic_launcher)
@@ -54,6 +56,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         public TextView textViewName;
         public TextView textViewDescription;
+        public TextView textViewPrice;
         public ImageView imageView;
 
         public ImageViewHolder(View itemView) {
@@ -61,6 +64,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
             textViewName = itemView.findViewById(R.id.text_view_name);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
+            textViewPrice = itemView.findViewById(R.id.text_view_price);
             imageView = itemView.findViewById(R.id.image_view_upload);
 
             itemView.setOnClickListener(this);

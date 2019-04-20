@@ -11,8 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Admin.AdminViews.BMW.BMW.ImagesActivity"></activity>
-        <activity android:name=".Admin.AdminViews.BMW.BMW.Main2Activity" />
+        <activity android:name=".Admin.AdminViews.Mercedes.ImagesMercActivity"></activity>
+        <activity android:name=".Admin.AdminViews.Mercedes.MainMercActivity" />
+        <activity android:name=".Admin.AdminViews.BMW.ImagesActivity" />
+        <activity android:name=".Admin.AdminViews.BMW.Main2Activity" />
         <activity android:name=".Admin.AdminHome" />
         <activity android:name=".Admin.AdminSignup" />
         <activity android:name=".Admin.AdminLogin" />

@@ -5,9 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.AdminViews.BMW.Main2Activity">
-
-
+    tools:context=".Admin.AdminViews.Mercedes.MainMercActivity">
 
     <TextView
         android:id="@+id/titleBmw"
@@ -17,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:textSize="40dp"
-        android:text="BMW ADD"/>
+        android:text="Mercedes ADD"/>
 
     <EditText
         android:id="@+id/edit_text_file_name"
@@ -37,23 +35,12 @@
         android:hint="Description"
         android:gravity="center"/>
 
-    <EditText
-        android:id="@+id/bmw_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bmw_description"
-        android:layout_marginTop="16dp"
-        android:inputType="number"
-        android:hint="Price"
-        android:gravity="center"/>
-
-
 
     <Button
         android:id="@+id/button_choose_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bmw_price"
+        android:layout_below="@id/bmw_description"
         android:text="Choose file" />
 
 
@@ -94,7 +81,6 @@
         android:gravity="center"
         android:text="Show Uploads"
         android:textSize="16sp" />
-
 
 
 </RelativeLayout>

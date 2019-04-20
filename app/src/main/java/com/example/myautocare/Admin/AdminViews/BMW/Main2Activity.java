@@ -1,4 +1,4 @@
-package com.example.myautocare.Admin.AdminViews.BMW.BMW;
+package com.example.myautocare.Admin.AdminViews.BMW;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -41,6 +41,7 @@ public class Main2Activity extends AppCompatActivity {
     private TextView mTextViewShowUploads;
     private EditText mEditTextFileName;
     private EditText mEditTextFileDescription;
+    private EditText mEditTextFileprice;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
 
@@ -61,6 +62,7 @@ public class Main2Activity extends AppCompatActivity {
         mTextViewShowUploads = findViewById(R.id.text_view_show_uploads);
         mEditTextFileName = findViewById(R.id.edit_text_file_name);
         mEditTextFileDescription = findViewById(R.id.bmw_description);
+        mEditTextFileprice = findViewById(R.id.bmw_price);
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
@@ -156,6 +158,7 @@ public class Main2Activity extends AppCompatActivity {
                             Uri downloadUrl = urlTask.getResult(); Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString());
                             Upload upload = new Upload(mEditTextFileName.getText().toString().trim()
                                     ,mEditTextFileDescription.getText().toString()
+                                    ,mEditTextFileprice.getText().toString()
                                     ,downloadUrl.toString());
 
                             String uploadId = mDatabaseRef.push().getKey();
