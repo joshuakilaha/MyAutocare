@@ -1,4 +1,4 @@
-package com.example.myautocare.Admin.AdminViews.BMW;
+package com.example.myautocare.Admin.AdminViews.BMW.BMW;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

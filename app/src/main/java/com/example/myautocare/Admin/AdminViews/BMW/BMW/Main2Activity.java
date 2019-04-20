@@ -1,4 +1,4 @@
-package com.example.myautocare.Admin.AdminViews.BMW;
+package com.example.myautocare.Admin.AdminViews.BMW.BMW;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -30,9 +30,9 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class BMWEdit extends AppCompatActivity {
+public class Main2Activity extends AppCompatActivity {
 
-    private static final String TAG = "BMWEdit";
+    private static final String TAG = "MainActivity";
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -40,7 +40,6 @@ public class BMWEdit extends AppCompatActivity {
     private Button mButtonUpload;
     private TextView mTextViewShowUploads;
     private EditText mEditTextFileName;
-    private EditText mEditTextFileDescription;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
 
@@ -54,46 +53,56 @@ public class BMWEdit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bmwedit);
+        setContentView(R.layout.activity_main2);
 
-
-        mButtonChooseImage = findViewById(R.id.bmw_choose_image);
+        mButtonChooseImage = findViewById(R.id.button_choose_image);
         mButtonUpload = findViewById(R.id.button_upload);
         mTextViewShowUploads = findViewById(R.id.text_view_show_uploads);
-
-        mEditTextFileName = findViewById(R.id.bmw_name_part);
-
-        mEditTextFileDescription = findViewById(R.id.bmw_description);
+        mEditTextFileName = findViewById(R.id.edit_text_file_name);
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploadsBMW");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsBMW");
 
-        mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFileChooser();
-            }
-        });
-
-        mButtonUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mUploadTask != null && mUploadTask.isInProgress()) {
-                    Toast.makeText(BMWEdit.this, "Upload in progress", Toast.LENGTH_SHORT).show();
-                } else {
-                    uploadFile();
+        try {
+            mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openFileChooser();
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
 
-        mTextViewShowUploads.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImagesActivity();
-            }
-        });
+        }
+
+        try {
+
+
+            mButtonUpload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mUploadTask != null && mUploadTask.isInProgress()) {
+                        Toast.makeText(Main2Activity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadFile();
+                    }
+                }
+            });
+        } catch (Exception e) {
+
+        }
+
+        try {
+            mTextViewShowUploads.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openImagesActivity();
+                }
+            });
+        }catch (Exception e){
+
+        }
     }
 
     private void openFileChooser() {
@@ -138,15 +147,12 @@ public class BMWEdit extends AppCompatActivity {
                                 }
                             }, 500);
 
-                            Toast.makeText(BMWEdit.this, "Upload successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Main2Activity.this, "Upload successful", Toast.LENGTH_LONG).show();
 
 
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl(); while (!urlTask.isSuccessful());
                             Uri downloadUrl = urlTask.getResult(); Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString());
                             Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString());
-
-                            //Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString());
-
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload);
 
@@ -156,7 +162,7 @@ public class BMWEdit extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BMWEdit.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Main2Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

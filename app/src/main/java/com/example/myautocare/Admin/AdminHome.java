@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.myautocare.Admin.AdminViews.BMW.BMWEdit;
+import com.example.myautocare.Admin.AdminViews.BMW.BMW.Main2Activity;
 import com.example.myautocare.R;
 
 public class AdminHome extends AppCompatActivity {
@@ -31,8 +31,9 @@ public class AdminHome extends AppCompatActivity {
         BMW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent BMWeditactivity = new Intent(AdminHome.this, BMWEdit.class);
-                startActivity(BMWeditactivity);
+
+                Intent BMWedit = new Intent(AdminHome.this, Main2Activity.class);
+                startActivity(BMWedit);
             }
         });
 
