@@ -1,4 +1,4 @@
-package com.example.myautocare.Admin.AdminViews.Mercedes;
+package com.example.myautocare.Admin.AdminViews.Toyota;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.myautocare.Admin.AdminViews.BMW.Upload;
 import com.example.myautocare.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -21,10 +22,10 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImagesMercActivity extends AppCompatActivity implements ImageAdapterM.OnItemClickListener{
+public class ImagesToyotaActivity extends AppCompatActivity implements ImageAdapterT.OnItemClickListener{
 
     private RecyclerView mRecyclerView;
-    private ImageAdapterM mAdapter;
+    private ImageAdapterT mAdapter;
 
     private ProgressBar mProgressCircle;
 
@@ -32,14 +33,12 @@ public class ImagesMercActivity extends AppCompatActivity implements ImageAdapte
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
 
-    private List<UploadM> mUploads;
-
+    private List<UploadT> mUploads;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_images_merc);
-
+        setContentView(R.layout.activity_images_toyota);
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -49,14 +48,14 @@ public class ImagesMercActivity extends AppCompatActivity implements ImageAdapte
 
         mUploads = new ArrayList<>();
 
-        mAdapter = new ImageAdapterM(ImagesMercActivity.this, mUploads);
+        mAdapter = new ImageAdapterT(ImagesToyotaActivity.this, mUploads);
 
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(ImagesMercActivity.this);
+        mAdapter.setOnItemClickListener(ImagesToyotaActivity.this);
 
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsMerc");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsToyota");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -65,7 +64,7 @@ public class ImagesMercActivity extends AppCompatActivity implements ImageAdapte
                 mUploads.clear();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    UploadM upload = postSnapshot.getValue(UploadM.class);
+                    UploadT upload = postSnapshot.getValue(UploadT.class);
                     upload.setKey(postSnapshot.getKey());
                     mUploads.add(upload);
                 }
@@ -77,7 +76,7 @@ public class ImagesMercActivity extends AppCompatActivity implements ImageAdapte
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ImagesMercActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ImagesToyotaActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
@@ -95,7 +94,7 @@ public class ImagesMercActivity extends AppCompatActivity implements ImageAdapte
 
     @Override
     public void onDeleteClick(int position) {
-        UploadM selectedItem = mUploads.get(position);
+        UploadT selectedItem = mUploads.get(position);
         final String selectedKey = selectedItem.getKey();
 
         StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
@@ -103,7 +102,7 @@ public class ImagesMercActivity extends AppCompatActivity implements ImageAdapte
             @Override
             public void onSuccess(Void aVoid) {
                 mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(ImagesMercActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ImagesToyotaActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
             }
         });
     }

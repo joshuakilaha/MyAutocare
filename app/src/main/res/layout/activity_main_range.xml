@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.AdminViews.Mercedes.MainMercActivity">
+    tools:context=".Admin.AdminViews.RangeRover.MainRangeActivity">
+
 
     <TextView
         android:id="@+id/titleBmw"
@@ -15,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:textSize="40dp"
-        android:text="Mercedes Benz ADD"/>
+        android:text="Range Rover ADD"/>
 
     <EditText
         android:id="@+id/edit_text_file_name"

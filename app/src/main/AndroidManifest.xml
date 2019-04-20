@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Admin.AdminViews.Mercedes.ImagesMercActivity"></activity>
+        <activity android:name=".Admin.AdminViews.Toyota.ImagesToyotaActivity"></activity>
+        <activity android:name=".Admin.AdminViews.Toyota.MainToyotaActivity" />
+        <activity android:name=".Admin.AdminViews.RangeRover.ImagesRangeActivity" />
+        <activity android:name=".Admin.AdminViews.RangeRover.MainRangeActivity" />
+        <activity android:name=".Admin.AdminViews.Mercedes.ImagesMercActivity" />
         <activity android:name=".Admin.AdminViews.Mercedes.MainMercActivity" />
         <activity android:name=".Admin.AdminViews.BMW.ImagesActivity" />
         <activity android:name=".Admin.AdminViews.BMW.Main2Activity" />

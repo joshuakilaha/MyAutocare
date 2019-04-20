@@ -1,4 +1,4 @@
-package com.example.myautocare.Admin.AdminViews.Mercedes;
+package com.example.myautocare.Admin.AdminViews.Toyota;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -17,8 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myautocare.Admin.AdminViews.BMW.ImagesActivity;
-import com.example.myautocare.Admin.AdminViews.BMW.Upload;
 import com.example.myautocare.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,9 +30,9 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class MainMercActivity extends AppCompatActivity {
+public class MainToyotaActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainMercActivity";
+    private static final String TAG = "MainToyotaActivity";
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -54,10 +52,11 @@ public class MainMercActivity extends AppCompatActivity {
 
     private StorageTask mUploadTask;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_merc);
+        setContentView(R.layout.activity_main_toyota);
 
         mButtonChooseImage = findViewById(R.id.button_choose_image);
         mButtonUpload = findViewById(R.id.button_upload);
@@ -68,8 +67,8 @@ public class MainMercActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploadsMerc");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsMerc");
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploadsToyota");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsToyota");
 
         try {
             mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +88,7 @@ public class MainMercActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (mUploadTask != null && mUploadTask.isInProgress()) {
-                        Toast.makeText(MainMercActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainToyotaActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                     } else {
                         uploadFile();
                     }
@@ -153,13 +152,13 @@ public class MainMercActivity extends AppCompatActivity {
                                 }
                             }, 500);
 
-                            Toast.makeText(MainMercActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainToyotaActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
 
 
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl(); while (!urlTask.isSuccessful());
                             Uri downloadUrl = urlTask.getResult(); Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString());
-                            UploadM upload = new UploadM(mEditTextFileName.getText().toString().trim()
-                                    ,mEditTextFileDescription.getText().toString().trim()
+                            UploadT upload = new UploadT(mEditTextFileName.getText().toString().trim()
+                                    ,mEditTextFileDescription.getText().toString()
                                     ,mEditTextFileprice.getText().toString()
                                     ,downloadUrl.toString());
 
@@ -172,7 +171,7 @@ public class MainMercActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MainMercActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainToyotaActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -188,7 +187,7 @@ public class MainMercActivity extends AppCompatActivity {
     }
 
     private void openImagesActivity() {
-        Intent intent = new Intent(this, ImagesMercActivity.class);
+        Intent intent = new Intent(this, ImagesToyotaActivity.class);
         startActivity(intent);
     }
 }

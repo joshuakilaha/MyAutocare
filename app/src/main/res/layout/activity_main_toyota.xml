@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.AdminViews.Mercedes.MainMercActivity">
+    tools:context=".Admin.AdminViews.Toyota.MainToyotaActivity">
+
 
     <TextView
         android:id="@+id/titleBmw"
@@ -15,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:textSize="40dp"
-        android:text="Mercedes Benz ADD"/>
+        android:text="Toyota ADD"/>
 
     <EditText
         android:id="@+id/edit_text_file_name"
@@ -45,16 +46,12 @@
         android:hint="Price"
         android:gravity="center"/>
 
-
-
     <Button
         android:id="@+id/button_choose_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/bmw_price"
         android:text="Choose file" />
-
-
 
     <ImageView
         android:id="@+id/image_view"

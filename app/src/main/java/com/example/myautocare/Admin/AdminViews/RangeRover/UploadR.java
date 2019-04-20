@@ -5,6 +5,7 @@ import com.google.firebase.database.Exclude;
 public class UploadR {
     private String mName;
     private String mDescription;
+    private String mprice;
     private String mImageUrl;
     private String mKey;
 
@@ -12,13 +13,14 @@ public class UploadR {
         //empty constructor needed
     }
 
-    public UploadR (String name, String Description,String imageUrl) {
+    public UploadR (String name, String Description,String Price,String imageUrl) {
         if (name.trim().equals("")) {
             name = "No Name";
         }
 
         mName = name;
         mDescription = Description;
+        mprice = Price;
         mImageUrl = imageUrl;
     }
 
@@ -36,6 +38,14 @@ public class UploadR {
 
     public void setmDescription(String mDescription) {
         this.mDescription = mDescription;
+    }
+
+    public String getMprice() {
+        return mprice;
+    }
+
+    public void setMprice(String mprice) {
+        this.mprice = mprice;
     }
 
     public String getImageUrl() {

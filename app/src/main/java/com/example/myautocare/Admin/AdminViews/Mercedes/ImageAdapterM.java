@@ -20,7 +20,7 @@ import java.util.List;
 public class ImageAdapterM extends RecyclerView.Adapter<ImageAdapterM.ImageViewHolder> {
     private Context mContext;
     private List<UploadM> mUploads;
-    private ImagesMercActivity mListener;
+    private OnItemClickListener mListener;
 
     public ImageAdapterM(Context context, List<UploadM> uploads) {
         mContext = context;
@@ -28,16 +28,18 @@ public class ImageAdapterM extends RecyclerView.Adapter<ImageAdapterM.ImageViewH
     }
 
     @Override
-    public ImageAdapterM.ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.image_item, parent, false);
-        return new ImageAdapterM.ImageViewHolder(v);
+        return new ImageViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ImageAdapterM.ImageViewHolder holder, int position) {
+    public void onBindViewHolder(ImageViewHolder holder, int position) {
         UploadM uploadCurrent = mUploads.get(position);
-        holder.textViewName.setText(uploadCurrent.getName());
-        holder.textViewDescription.setText(uploadCurrent.getmDescription());
+        holder.textViewName.setText("Item: "+ uploadCurrent.getName());
+        holder.textViewDescription.setText("Description: "+uploadCurrent.getmDescription());
+        holder.textViewPrice.setText(" ksh. "+uploadCurrent.getMprice());
+
         Picasso.with(mContext)
                 .load(uploadCurrent.getImageUrl())
                 .placeholder(R.mipmap.ic_launcher)
@@ -55,6 +57,7 @@ public class ImageAdapterM extends RecyclerView.Adapter<ImageAdapterM.ImageViewH
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         public TextView textViewName;
         public TextView textViewDescription;
+        public TextView textViewPrice;
         public ImageView imageView;
 
         public ImageViewHolder(View itemView) {
@@ -62,6 +65,7 @@ public class ImageAdapterM extends RecyclerView.Adapter<ImageAdapterM.ImageViewH
 
             textViewName = itemView.findViewById(R.id.text_view_name);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
+            textViewPrice = itemView.findViewById(R.id.text_view_price);
             imageView = itemView.findViewById(R.id.image_view_upload);
 
             itemView.setOnClickListener(this);
@@ -116,7 +120,7 @@ public class ImageAdapterM extends RecyclerView.Adapter<ImageAdapterM.ImageViewH
         void onDeleteClick(int position);
     }
 
-    public void setOnItemClickListener(ImagesMercActivity listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 }

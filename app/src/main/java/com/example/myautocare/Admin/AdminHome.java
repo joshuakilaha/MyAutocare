@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.example.myautocare.Admin.AdminViews.BMW.Main2Activity;
 import com.example.myautocare.Admin.AdminViews.Mercedes.MainMercActivity;
+import com.example.myautocare.Admin.AdminViews.RangeRover.MainRangeActivity;
+import com.example.myautocare.Admin.AdminViews.Toyota.MainToyotaActivity;
 import com.example.myautocare.R;
 
 public class AdminHome extends AppCompatActivity {
@@ -33,16 +35,32 @@ public class AdminHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent BMWedit = new Intent(AdminHome.this, Main2Activity.class);
-                startActivity(BMWedit);
+                Intent BMW_edit = new Intent(AdminHome.this, Main2Activity.class);
+                startActivity(BMW_edit);
             }
         });
 
         Mercedes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent Mercedit = new Intent(AdminHome.this, MainMercActivity.class);
-                startActivity(Mercedit);
+                Intent Merc_edit = new Intent(AdminHome.this, MainMercActivity.class);
+                startActivity(Merc_edit);
+            }
+        });
+
+        RangeRover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Range_edit = new Intent(AdminHome.this, MainRangeActivity.class);
+                startActivity(Range_edit);
+            }
+        });
+
+        Toyota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Toyota_edit = new Intent(AdminHome.this, MainToyotaActivity.class);
+                startActivity(Toyota_edit);
             }
         });
 
