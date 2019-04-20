@@ -40,6 +40,7 @@ public class Main2Activity extends AppCompatActivity {
     private Button mButtonUpload;
     private TextView mTextViewShowUploads;
     private EditText mEditTextFileName;
+    private EditText mEditTextFileDescription;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
 
@@ -59,6 +60,7 @@ public class Main2Activity extends AppCompatActivity {
         mButtonUpload = findViewById(R.id.button_upload);
         mTextViewShowUploads = findViewById(R.id.text_view_show_uploads);
         mEditTextFileName = findViewById(R.id.edit_text_file_name);
+        mEditTextFileDescription = findViewById(R.id.bmw_description);
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
@@ -152,7 +154,10 @@ public class Main2Activity extends AppCompatActivity {
 
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl(); while (!urlTask.isSuccessful());
                             Uri downloadUrl = urlTask.getResult(); Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString());
-                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString());
+                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim()
+                                    ,mEditTextFileDescription.getText().toString()
+                                    ,downloadUrl.toString());
+
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload);
 
