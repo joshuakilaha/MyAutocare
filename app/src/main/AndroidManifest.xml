@@ -11,7 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Admin.AdminViews.Toyota.ImagesToyotaActivity"></activity>
+        <activity android:name=".Activities.User.SignUpActivity"></activity>
+        <activity android:name=".MenuActivities.Brands" />
+        <activity android:name=".MenuActivities.BrandActivities.Toyota" />
+        <activity android:name=".MenuActivities.BrandActivities.Mercedes" />
+        <activity android:name=".MenuActivities.BrandActivities.RangeRover" />
+        <activity android:name=".MenuActivities.BrandActivities.BMW" />
+        <activity android:name=".MenuActivities.ContactUs" />
+        <activity android:name=".MenuActivities.AboutUs" />
+        <activity android:name=".MenuActivities.Settings" />
+        <activity android:name=".MenuActivities.Mylocation" />
+        <activity android:name=".MenuActivities.MyParts" />
+        <activity android:name=".MenuActivities.Profile" />
+        <activity android:name=".Admin.AdminViews.Toyota.ImagesToyotaActivity" />
         <activity android:name=".Admin.AdminViews.Toyota.MainToyotaActivity" />
         <activity android:name=".Admin.AdminViews.RangeRover.ImagesRangeActivity" />
         <activity android:name=".Admin.AdminViews.RangeRover.MainRangeActivity" />
@@ -22,7 +34,7 @@
         <activity android:name=".Admin.AdminHome" />
         <activity android:name=".Admin.AdminSignup" />
         <activity android:name=".Admin.AdminLogin" />
-        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.User.LoginActivity" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.SplashScreen">
             <intent-filter>

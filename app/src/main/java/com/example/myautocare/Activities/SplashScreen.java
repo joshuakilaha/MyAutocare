@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.myautocare.Activities.User.LoginActivity;
 import com.example.myautocare.R;
 
 public class SplashScreen extends AppCompatActivity {

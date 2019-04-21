@@ -1,4 +1,4 @@
-package com.example.myautocare.Activities;
+package com.example.myautocare.Activities.User;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myautocare.Admin.AdminLogin;
-import com.example.myautocare.Admin.AdminSignup;
 import com.example.myautocare.R;
 
 public class LoginActivity extends AppCompatActivity {
