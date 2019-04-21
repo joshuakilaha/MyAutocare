@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.User.SignUpActivity"></activity>
+        <activity android:name=".MenuActivities.BrandActivities.BrandUserViews.BmwUserView"></activity>
+        <activity android:name=".User.SignUpActivity" />
         <activity android:name=".MenuActivities.Brands" />
         <activity android:name=".MenuActivities.BrandActivities.Toyota" />
         <activity android:name=".MenuActivities.BrandActivities.Mercedes" />
@@ -34,7 +35,7 @@
         <activity android:name=".Admin.AdminHome" />
         <activity android:name=".Admin.AdminSignup" />
         <activity android:name=".Admin.AdminLogin" />
-        <activity android:name=".Activities.User.LoginActivity" />
+        <activity android:name=".User.LoginActivity" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.SplashScreen">
             <intent-filter>

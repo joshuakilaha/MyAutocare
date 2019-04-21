@@ -1,4 +1,4 @@
-package com.example.myautocare.Activities.User;
+package com.example.myautocare.User;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -56,6 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //////////////////////Signup/////////////////////////////
+                new Signup().execute();
             }
         });
 
@@ -78,11 +79,11 @@ public class SignUpActivity extends AppCompatActivity {
         protected Void doInBackground(String... params) {
             try {
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("first name", first_name.getText().toString().trim())
-                        .appendQueryParameter("last name", last_name.getText().toString().trim())
-                        .appendQueryParameter("id number", id_number.getText().toString().trim())
-                        .appendQueryParameter("email", email.getText().toString().trim())
-                        .appendQueryParameter("password", password.getText().toString().trim());
+                        .appendQueryParameter("first_name",first_name.getText().toString().trim())
+                        .appendQueryParameter("last_name",last_name.getText().toString().trim())
+                        .appendQueryParameter("id_number",id_number.getText().toString().trim())
+                        .appendQueryParameter("email",email.getText().toString().trim())
+                        .appendQueryParameter("password",password.getText().toString().trim());
 
                 query = builder.build().getEncodedQuery();
                 String url = "https://beastly-defection.000webhostapp.com/AutoCare/signup.php";

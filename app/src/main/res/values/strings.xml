@@ -7,4 +7,7 @@
 
     <string name="AdminSignup"><u>Signup</u></string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>

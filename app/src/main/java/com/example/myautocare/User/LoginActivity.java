@@ -1,4 +1,4 @@
-package com.example.myautocare.Activities.User;
+package com.example.myautocare.User;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.myautocare.Activities.MainActivity;
 import com.example.myautocare.Admin.AdminLogin;
 import com.example.myautocare.R;
 
@@ -39,6 +40,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 /////////move to main activity////
 
+                Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(main);
+
             }
         });
 
@@ -49,7 +53,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                Intent SignUp_user = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(SignUp_user);
 
             }
         });
