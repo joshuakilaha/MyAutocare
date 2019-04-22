@@ -30,6 +30,8 @@ public class SignUpActivity extends AppCompatActivity {
     EditText first_name,last_name,email,id_number,password;
     Button signup;
 
+    EditText id,name;
+
     /////connecting to sql
     JSONObject json_data;
     HttpURLConnection con;
@@ -42,12 +44,20 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-
+/*
         first_name = findViewById(R.id.user_first_name);
         last_name = findViewById(R.id.user_last_name);
         id_number = findViewById(R.id.user_id);
         email = findViewById(R.id.user_email);
         password = findViewById(R.id.user_password);
+        */
+
+        id = findViewById(R.id.user_id);
+        first_name = findViewById(R.id.user_first_name);
+        last_name = findViewById(R.id.user_last_name);
+        email = findViewById(R.id.user_email);
+        password = findViewById(R.id.user_password);
+
 
         signup = findViewById(R.id.signup_user);
 
@@ -79,14 +89,24 @@ public class SignUpActivity extends AppCompatActivity {
         protected Void doInBackground(String... params) {
             try {
                 Uri.Builder builder = new Uri.Builder()
+                        /*
                         .appendQueryParameter("first_name",first_name.getText().toString().trim())
                         .appendQueryParameter("last_name",last_name.getText().toString().trim())
                         .appendQueryParameter("id_number",id_number.getText().toString().trim())
                         .appendQueryParameter("email",email.getText().toString().trim())
                         .appendQueryParameter("password",password.getText().toString().trim());
+                        */
+
+                        .appendQueryParameter("id_number", id.getText().toString().trim())
+                        .appendQueryParameter("first_name", first_name.getText().toString().trim())
+                        .appendQueryParameter("last_name",last_name.getText().toString().trim())
+                        .appendQueryParameter("email",email.getText().toString().trim())
+                        .appendQueryParameter("password",password.getText().toString().trim());
 
                 query = builder.build().getEncodedQuery();
-                String url = "https://beastly-defection.000webhostapp.com/AutoCare/signup.php";
+               // String url = "https://beastly-defection.000webhostapp.com/AutoCare/signup.php";
+
+                String url = "https://beastly-defection.000webhostapp.com/AutoCare/create.php";
 
                 URL obj = new URL(url);
                 con = (HttpURLConnection) obj.openConnection();
