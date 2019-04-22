@@ -1,6 +1,7 @@
 package com.example.myautocare.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +10,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myautocare.MenuActivities.AboutUs;
@@ -24,13 +30,42 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-
     NavigationView mNavigationView;
+
+    /////webview////
+    WebView webView;
+    ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        webView = findViewById(R.id.webview);
+        progressBar = findViewById(R.id.progress_barweb);
+
+       webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("https://www.carmagazine.co.uk/");
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                progressBar.setVisibility(View.VISIBLE);
+                setTitle("Loading...");
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                progressBar.setVisibility(View.GONE);
+                setTitle(view.getTitle());
+                super.onPageFinished(view, url);
+            }
+        });
+
 
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -44,6 +79,20 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
+    ////webview backpressed
+
+
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()){
+            webView.goBack();
+        }
+        else {
+
+            super.onBackPressed();
+        }
+
+    }
 
 
     @Override

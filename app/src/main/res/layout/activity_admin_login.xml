@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/logindesigns"
     tools:context=".Admin.AdminLogin">
 
     <TextView
@@ -14,16 +15,16 @@
         android:textSize="40dp"
         android:layout_gravity="center"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+
 
         <EditText
             android:id="@+id/admin_email"
+            android:background="@drawable/editshapes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="15dp"
             android:hint="email"
             android:inputType="textEmailAddress"
@@ -31,21 +32,30 @@
 
         <EditText
             android:id="@+id/admin_password"
+            android:background="@drawable/editshapes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="15dp"
             android:hint="Password"
             android:inputType="textPassword"
             android:gravity="center"/>
 
-    </LinearLayout>
+
 
     <Button
         android:id="@+id/login_admin"
-        android:layout_width="wrap_content"
+        android:background="@drawable/splashbtn"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
+        android:textColor="#FF4500"
+        android:textStyle="bold"
         android:text="Login"/>
 
     <TextView
@@ -53,7 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="#FF4500"
         android:text="@string/AdminSignup"/>
 
 
