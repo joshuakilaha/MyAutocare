@@ -17,9 +17,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,11 +57,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
+    ///animation
+    Animation frombotton,fromtop;
 
-    EditText email, passwords,id;
+    EditText email, password,id,first_name;
     Button login;
     TextView signup, admin, forgot_password;
     CheckBox checkBox;
+
+
 
     JSONObject json_data;
     HttpURLConnection con;
@@ -74,15 +81,33 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        frombotton = AnimationUtils.loadAnimation(this,R.anim.frombutton);
+
+        fromtop = AnimationUtils.loadAnimation(this,R.anim.fromtop);
+
+
 
         id = findViewById(R.id.user_id);
         email = findViewById(R.id.user_email);
-        passwords = findViewById(R.id.user_password);
+        first_name = findViewById(R.id.user_first_name);
+        password = findViewById(R.id.user_password);
         login = findViewById(R.id.login);
         signup = findViewById(R.id.signup);
         forgot_password = findViewById(R.id.forgot_password);
         admin = findViewById(R.id.admin);
         checkBox = findViewById(R.id.remember);
+
+
+
+
+        login.startAnimation(frombotton);
+        signup.startAnimation(frombotton);
+        forgot_password.startAnimation(frombotton);
+        admin.startAnimation(frombotton);
+        checkBox.startAnimation(frombotton);
+        email.startAnimation(fromtop);
+        password.startAnimation(fromtop);
+
 
 
 
@@ -94,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
               //  Intent main = new Intent(LoginActivity.this, MainActivity.class);
                 //startActivity(main);
 
-                new Login().execute();
+                new Read().execute();
 
             }
         });
@@ -136,151 +161,87 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void checkLogin(View arg0) {
-
-        // Get text from id_number and passord field
-        final String id_number = id.getText().toString();
-        final String password = passwords.getText().toString();
-
-        // Initialize  AsyncLogin() class with email and password
-        new Login().execute(id_number,password);
-
-    }
-
-
-
-    private class Login extends AsyncTask<String, String, String>
-    {
-        ProgressDialog pdLoading = new ProgressDialog(LoginActivity.this);
-        HttpURLConnection conn;
-        URL url = null;
-
+    final class Read extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
-            pdLoading.setCancelable(false);
-            pdLoading.show();
-
+            mProgressDialog = new ProgressDialog(LoginActivity.this);
+            mProgressDialog.setMessage("Reading record please wait..");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.show();
         }
         @Override
-        protected String doInBackground(String... params) {
+        protected Void doInBackground(String... params) {
             try {
-
-
-
-                // Enter URL address where your php file resides
-                url = new URL("https://beastly-defection.000webhostapp.com/AutoCare/Authentication.php");
-
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return "exception";
-            }
-            try {
-                // Setup HttpURLConnection class to send and receive data from php and mysql
-                conn = (HttpURLConnection)url.openConnection();
-                conn.setReadTimeout(READ_TIMEOUT);
-                conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestMethod("POST");
-
-                // setDoInput and setDoOutput method depict handling of both send and receive
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-
-                // Append parameters to URL
                 Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("email", email.getText().toString().trim())
+                        .appendQueryParameter("password", password.getText().toString().trim())
+                        .appendQueryParameter("first_name", first_name.getText().toString().trim());
 
-                        //.appendQueryParameter("email",email.getText().toString().trim())
-                        //.appendQueryParameter("password",passwords.getText().toString().trim());
 
-                        .appendQueryParameter("email", params[0])
-                        .appendQueryParameter("password", params[1]);
+                query = builder.build().getEncodedQuery();
+                String url = "https://beastly-defection.000webhostapp.com/AutoCare/Authentication.php";
 
-                String query = builder.build().getEncodedQuery();
-
-                // Open connection for sending data
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(query);
-                writer.flush();
-                writer.close();
-                os.close();
-                conn.connect();
-
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-                return "exception";
+                URL obj = new URL(url);
+                con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 7.0;Windows NT 5.1)");
+                con.setRequestProperty("Accept-Language", "UTF-8");
+                con.setDoOutput(true);
+                OutputStreamWriter outputStreamWriter = new
+                        OutputStreamWriter(con.getOutputStream());
+                outputStreamWriter.write(query);
+                outputStreamWriter.flush();
+            } catch (Exception e) {
+                android.util.Log.e("Fail 1", e.toString());
             }
-
             try {
-
-                int response_code = conn.getResponseCode();
-
-                // Check if successful connection made
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    // Read data sent from server
-                    InputStream input = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        result.append(line);
-                    }
-
-                    // Pass data to onPostExecute method
-                    return(result.toString());
-
-                }else{
-
-                    return("unsuccessful");
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(con.getInputStream()));
+                String line;
+                StringBuffer sb = new StringBuffer();
+                while ((line = in.readLine()) != null) {
+                    sb.append(line + "\n");
                 }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "exception";
-            } finally {
-                conn.disconnect();
+                results = sb.toString();
+            } catch (Exception e) {
+                android.util.Log.e("Fail 2", e.toString());
             }
-
-
+            return null;
         }
-
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Void result) {
+            try {
+                json_data = new JSONObject(results);
+                int code = (json_data.getInt("code"));
+                if (code == 1) {
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 
-            //this method will be running on UI thread
+                    first_name.setText(json_data.getString("first_name"));
+                    intent.putExtra("first_name",first_name.getText());
+                    startActivity(intent);
 
-            pdLoading.dismiss();
+                } else {
 
-            if(result.equalsIgnoreCase("true"))
-            {
-                /* Here launching another activity when login successful. If you persist login state
-                use sharedPreferences of Android. and logout button to clear sharedPreferences.
-                 */
 
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-                LoginActivity.this.finish();
-
-            }else if (result.equalsIgnoreCase("false")){
-
-                // If username and password does not match display a error message
-                Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_LONG).show();
-
-            } else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful")) {
-
-                Toast.makeText(LoginActivity.this, "OOPs! Something went wrong. Connection Problem.", Toast.LENGTH_LONG).show();
-
+                    final AlertDialog.Builder alert = new
+                            AlertDialog.Builder(LoginActivity.this);
+                    alert.setTitle("Failed");
+                    alert.setMessage("Reading Student Failed");
+                    alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(@NonNull DialogInterface dialog, int whichButton)
+                        {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
+            } catch (Exception e) {
+                Log.e("Fail 3", e.toString());
             }
+            mProgressDialog.dismiss();
         }
-
     }
-
 }

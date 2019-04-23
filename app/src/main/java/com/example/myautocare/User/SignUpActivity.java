@@ -3,6 +3,7 @@ package com.example.myautocare.User;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -11,8 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.myautocare.R;
 
@@ -25,10 +29,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class SignUpActivity extends AppCompatActivity {
+    Animation frombotton,fromtop;
 
 
     EditText first_name,last_name,email,id,password;
     Button signup;
+
 
 
 
@@ -44,6 +50,9 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        frombotton = AnimationUtils.loadAnimation(this,R.anim.frombutton);
+
+        fromtop = AnimationUtils.loadAnimation(this,R.anim.fromtop);
 
         id = findViewById(R.id.user_id);
         first_name = findViewById(R.id.user_first_name);
@@ -53,6 +62,23 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         signup = findViewById(R.id.signup_user);
+
+
+
+
+
+
+
+
+        signup.startAnimation(frombotton);
+        email.startAnimation(fromtop);
+        password.startAnimation(fromtop);
+        first_name.startAnimation(fromtop);
+        last_name.startAnimation(fromtop);
+        id.startAnimation(fromtop);
+
+
+
 
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
                 int code = (json_data.getInt("code"));
                 if (code == 1) {
                     final AlertDialog.Builder alert = new AlertDialog.Builder(SignUpActivity.this);
+
                     alert.setTitle("Success");
                     alert.setMessage("User Record Created");
                     alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
@@ -157,6 +184,9 @@ public class SignUpActivity extends AppCompatActivity {
             mProgressDialog.dismiss();
         }
     }
+
+
+
 
 
 }

@@ -15,6 +15,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myautocare.MenuActivities.AboutUs;
@@ -25,12 +26,17 @@ import com.example.myautocare.MenuActivities.Mylocation;
 import com.example.myautocare.MenuActivities.Profile;
 import com.example.myautocare.MenuActivities.Settings;
 import com.example.myautocare.R;
+import com.example.myautocare.User.User;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     NavigationView mNavigationView;
+
+    String first_name;
+
+    TextView user;
 
     /////webview////
     WebView webView;
@@ -65,6 +71,25 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 super.onPageFinished(view, url);
             }
         });
+
+        user = findViewById(R.id.user_first_name1);
+
+        try {
+
+            User user1 = new User();
+
+            first_name  = getIntent().getStringExtra("first_name");
+
+            user.setText(user1.getFirst_name());
+
+            //user.setText("hi" + user1.getFirst_name());
+        }
+        catch (Exception e){
+
+        }
+
+
+
 
 
 
