@@ -180,8 +180,15 @@ public class MainMercActivity extends AppCompatActivity {
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                             mProgressBar.setProgress((int) progress);
+
+
                         }
+
+
                     });
+
+
+
         } else {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }

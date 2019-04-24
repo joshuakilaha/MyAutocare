@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/logindesigns"
     tools:context=".Admin.AdminHome">
 
     <LinearLayout
@@ -22,11 +23,7 @@
         android:text="Admin Home"
         android:textSize="50dp" />
 
-    <TextView
-        android:id="@+id/admin_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"/>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:layout_alignBottom="@id/admin_email"
-        android:src="@drawable/m3"/>
+        android:src="@drawable/mercedes"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,9 +51,9 @@
     <ImageView
         android:id="@+id/imagebmw"
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:layout_alignBottom="@id/admin_email"
-        android:src="@drawable/bmw"/>
+        android:src="@drawable/bmwp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,8 +65,8 @@
 
     <ImageView
         android:id="@+id/imageRange"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
         android:layout_alignBottom="@id/admin_email"
         android:src="@drawable/range"/>
 

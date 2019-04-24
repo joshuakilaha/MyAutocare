@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.myautocare.Activities.MainActivity;
 import com.example.myautocare.R;
 
 import org.json.JSONObject;
@@ -65,20 +66,12 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
         signup.startAnimation(frombotton);
         email.startAnimation(fromtop);
         password.startAnimation(fromtop);
         first_name.startAnimation(fromtop);
         last_name.startAnimation(fromtop);
         id.startAnimation(fromtop);
-
-
-
 
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(SignUpActivity.this);
-            mProgressDialog.setMessage("Creating record please wait..");
+            mProgressDialog.setMessage("Registering you're details, please wait..");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             mProgressDialog.setCancelable(false);
@@ -158,8 +151,13 @@ public class SignUpActivity extends AppCompatActivity {
                 if (code == 1) {
                     final AlertDialog.Builder alert = new AlertDialog.Builder(SignUpActivity.this);
 
+                    Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
+                    intent.putExtra("first_name",first_name.getText());
+                    startActivity(intent);
+
+
                     alert.setTitle("Success");
-                    alert.setMessage("User Record Created");
+                    alert.setMessage("Registration Success");
                     alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(@NonNull DialogInterface dialog, int whichButton) {
                             dialog.cancel();
@@ -169,7 +167,7 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     final AlertDialog.Builder alert = new AlertDialog.Builder(SignUpActivity.this);
                     alert.setTitle("Failed");
-                    alert.setMessage("Creating User Failed");
+                    alert.setMessage("Registering User Failed");
                     alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(@NonNull DialogInterface dialog, int whichButton) {
                             dialog.cancel();

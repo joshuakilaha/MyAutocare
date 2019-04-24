@@ -119,7 +119,7 @@ public class ImageAdapterR extends RecyclerView.Adapter<ImageAdapterR.ImageViewH
         void onDeleteClick(int position);
     }
 
-    public void setOnItemClickListener(ImagesRangeActivity listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 }

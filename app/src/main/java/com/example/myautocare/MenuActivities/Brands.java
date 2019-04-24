@@ -24,6 +24,11 @@ import com.example.myautocare.Admin.AdminViews.Mercedes.ImagesMercActivity;
 import com.example.myautocare.Admin.AdminViews.RangeRover.ImagesRangeActivity;
 import com.example.myautocare.Admin.AdminViews.Toyota.ImagesToyotaActivity;
 import com.example.myautocare.MenuActivities.BrandActivities.BrandUserViews.BmwUserView;
+import com.example.myautocare.MenuActivities.BrandActivities.BrandUserViews.MercedesUserView;
+import com.example.myautocare.MenuActivities.BrandActivities.BrandUserViews.RangeUserView;
+import com.example.myautocare.MenuActivities.BrandActivities.BrandUserViews.ToyotaUserView;
+import com.example.myautocare.MenuActivities.BrandActivities.Mercedes;
+import com.example.myautocare.MenuActivities.BrandActivities.Toyota;
 import com.example.myautocare.R;
 
 import java.io.InputStream;
@@ -64,6 +69,9 @@ public class Brands extends AppCompatActivity implements NavigationView.OnNaviga
         ////////////////////////////////////////////////////////////////////////////////////
 
         BMW();
+        mercedes();
+        range();
+        toyota();
     }
 
 
@@ -138,7 +146,7 @@ public class Brands extends AppCompatActivity implements NavigationView.OnNaviga
     //////////////////////////////////////////////////Flipper/////////////////////////////////////////////////////////////////////
 
 
-
+///////////////////////////////////////////BMW/////////////////////////////
 
     public void BMWflip(int image){
         ImageView imageView = new ImageView(this);
@@ -160,9 +168,7 @@ public class Brands extends AppCompatActivity implements NavigationView.OnNaviga
 
     public void BMW(){
 
-
-
-       int images [] = {R.drawable.cover1, R.drawable.bm2, R.drawable.m3, R.drawable.spl};
+       int images [] = {R.drawable.bmwlogo, R.drawable.b1, R.drawable.b2, R.drawable.b3};
 
         for (int image: images){
             BMWflip(image);
@@ -180,6 +186,115 @@ public class Brands extends AppCompatActivity implements NavigationView.OnNaviga
     }
 
 
+    /////////////////////////////////////////////////BENZ//////////////////////////////////////////////
+
+    public void mercedesflip(int image) {
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundResource(image);
+
+        brandflip4.addView(imageView);
+        brandflip4.setFlipInterval(4000);
+        brandflip4.setAutoStart(true);
+
+
+        brandflip4.setInAnimation(this, android.R.anim.slide_in_left);
+        brandflip4.setInAnimation(this, android.R.anim.slide_in_left);
+    }
+
+
+    public void mercedes(){
+
+        int images [] = {R.drawable.benzlogo, R.drawable.m1,R.drawable.m2,R.drawable.m3};
+        for (int image: images){
+            mercedesflip(image);
+        }
+
+        brandflip4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent merc = new Intent(Brands.this, MercedesUserView.class);
+                startActivity(merc);
+
+                Toast.makeText(Brands.this, "Parts Mercedes", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    //////////////////////////////////////////////////////////Range////////////////////////////////////////////////////////
+
+    public void rangeflip(int image){
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundResource(image);
+
+        brandflip.addView(imageView);
+        brandflip.setFlipInterval(5000);
+        brandflip.setAutoStart(true);
+
+        brandflip.setInAnimation(this,android.R.anim.slide_in_left);
+        brandflip.setInAnimation(this,android.R.anim.slide_in_left);
+
+
+
+    }
+
+    public void range(){
+
+        int images [] = {R.drawable.rlogo, R.drawable.r4,R.drawable.r5,R.drawable.r3};
+        for (int image: images){
+            rangeflip(image);
+        }
+
+        brandflip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent rang = new Intent(Brands.this, RangeUserView.class);
+                startActivity(rang);
+                Toast.makeText(Brands.this, "Parts Rangerover", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+
+///////////////////////////////////////////////////Toyota//////////////////////////////////////////////////////////
+
+    public void toyotaflip(int image){
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundResource(image);
+
+        brandflip2.addView(imageView);
+        brandflip2.setFlipInterval(4000);
+        brandflip2.setAutoStart(true);
+
+
+
+
+        brandflip2.setInAnimation(this,android.R.anim.slide_in_left);
+        brandflip2.setInAnimation(this,android.R.anim.slide_in_left);
+
+
+
+    }
+
+    public void toyota(){
+
+        int images [] = {R.drawable.toyotalogo, R.drawable.t1,R.drawable.t2,R.drawable.t3};
+        for (int image: images){
+            toyotaflip(image);
+        }
+
+        brandflip2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toyota = new Intent(Brands.this, ToyotaUserView.class);
+                startActivity(toyota);
+                Toast.makeText(Brands.this, "Parts Toyota", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
 
 ////////////////////////////////////////url image//////////////////////////////////////////////////////////

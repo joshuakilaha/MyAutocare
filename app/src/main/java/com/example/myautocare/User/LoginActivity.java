@@ -12,8 +12,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.myautocare.Activities.MainActivity;
 import com.example.myautocare.Admin.AdminLogin;
+import com.example.myautocare.MenuActivities.ContactUs;
 import com.example.myautocare.R;
 import com.google.android.gms.common.api.Response;
 
@@ -60,12 +63,14 @@ public class LoginActivity extends AppCompatActivity {
     ///animation
     Animation frombotton,fromtop;
 
-    EditText email, password,id,first_name;
+    EditText email, password,id,first_name,last_name;
     Button login;
     TextView signup, admin, forgot_password;
     CheckBox checkBox;
 
+    String First_name;
 
+    String User;
 
     JSONObject json_data;
     HttpURLConnection con;
@@ -85,11 +90,13 @@ public class LoginActivity extends AppCompatActivity {
 
         fromtop = AnimationUtils.loadAnimation(this,R.anim.fromtop);
 
+        First_name = getIntent().getStringExtra("first_name");
 
 
         id = findViewById(R.id.user_id);
         email = findViewById(R.id.user_email);
         first_name = findViewById(R.id.user_first_name);
+        last_name = findViewById(R.id.user_last_name);
         password = findViewById(R.id.user_password);
         login = findViewById(R.id.login);
         signup = findViewById(R.id.signup);
@@ -116,10 +123,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 /////////move to main activity////
 
-              //  Intent main = new Intent(LoginActivity.this, MainActivity.class);
-                //startActivity(main);
 
-                new Read().execute();
+                Textcheck();
+                new Login().execute();
 
             }
         });
@@ -154,19 +160,44 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
             }
         });
 
 
     }
 
-    final class Read extends AsyncTask<String, Void, Void> {
+
+    public  void Textcheck(){
+
+        String Email = email.getText().toString();
+        String Password = password.getText().toString();
+
+        if(TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password)){
+            final AlertDialog.Builder alert = new
+                    AlertDialog.Builder(LoginActivity.this);
+            alert.setTitle("Failed");
+            alert.setMessage("Please fill in the details");
+            alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(@NonNull DialogInterface dialog, int whichButton)
+                {
+                    dialog.cancel();
+                }
+            });
+            alert.show();
+
+        }
+    }
+
+
+
+    final class Login extends AsyncTask<String, Void, Void> {
+
         @Override
         protected void onPreExecute() {
+
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(LoginActivity.this);
-            mProgressDialog.setMessage("Reading record please wait..");
+            mProgressDialog.setMessage("Logging in, please wait...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             mProgressDialog.setCancelable(false);
@@ -178,11 +209,13 @@ public class LoginActivity extends AppCompatActivity {
                 Uri.Builder builder = new Uri.Builder()
                         .appendQueryParameter("email", email.getText().toString().trim())
                         .appendQueryParameter("password", password.getText().toString().trim())
-                        .appendQueryParameter("first_name", first_name.getText().toString().trim());
+                        .appendQueryParameter("first_name", first_name.getText().toString().trim())
+                        .appendQueryParameter("last_name", last_name.getText().toString().trim())
+                        .appendQueryParameter("id_number", id.getText().toString().trim());
 
 
                 query = builder.build().getEncodedQuery();
-                String url = "https://beastly-defection.000webhostapp.com/AutoCare/Authentication.php";
+                String url = "https://beastly-defection.000webhostapp.com/AutoCare/profile.php";
 
                 URL obj = new URL(url);
                 con = (HttpURLConnection) obj.openConnection();
@@ -210,6 +243,7 @@ public class LoginActivity extends AppCompatActivity {
                 android.util.Log.e("Fail 2", e.toString());
             }
             return null;
+
         }
         @Override
         protected void onPostExecute(Void result) {
@@ -217,11 +251,22 @@ public class LoginActivity extends AppCompatActivity {
                 json_data = new JSONObject(results);
                 int code = (json_data.getInt("code"));
                 if (code == 1) {
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+
+
 
                     first_name.setText(json_data.getString("first_name"));
-                    intent.putExtra("first_name",first_name.getText());
+                    last_name.setText(json_data.getString("last_name"));
+                    id.setText(json_data.getString("id_number"));
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                    intent.putExtra("first_name",first_name.getText().toString());
+                      intent.putExtra("last_name",last_name.getText().toString());
+                             intent.putExtra("id_number",id.getText().toString());
+                             intent.putExtra("email",email.getText().toString());
                     startActivity(intent);
+
+
 
                 } else {
 
@@ -229,7 +274,7 @@ public class LoginActivity extends AppCompatActivity {
                     final AlertDialog.Builder alert = new
                             AlertDialog.Builder(LoginActivity.this);
                     alert.setTitle("Failed");
-                    alert.setMessage("Reading Student Failed");
+                    alert.setMessage(" Failed to log in ");
                     alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(@NonNull DialogInterface dialog, int whichButton)
                         {

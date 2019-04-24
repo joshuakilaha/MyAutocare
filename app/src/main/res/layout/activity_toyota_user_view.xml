@@ -5,23 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuActivities.BrandActivities.BrandUserViews.BmwUserView">
+    tools:context=".MenuActivities.BrandActivities.BrandUserViews.ToyotaUserView">
 
     <TextView
         android:id="@+id/ViewBMWtitle"
         android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Items BMW"
+        android:text="Items Toyota"
         android:textSize="40dp"
         android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        />
-
+        android:layout_centerHorizontal="true"/>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/ViewBMWtitle"
         android:id="@+id/recycler_view"
+        android:layout_below="@id/ViewBMWtitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

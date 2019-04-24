@@ -20,7 +20,8 @@
 
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/logindesigns">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,6 +40,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentTop="true"
+                android:background="@color/viewbrand"/>
+
 
             <ViewFlipper
                 android:id="@+id/brandflip"
@@ -47,6 +55,14 @@
                 android:layout_centerHorizontal="true">
 
             </ViewFlipper>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@id/brandflip"
+                android:background="@color/viewbrand"/>
 
             <ViewFlipper
                 android:layout_below="@id/brandflip"
@@ -57,6 +73,14 @@
 
             </ViewFlipper>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@id/brandflip2"
+                android:background="@color/viewbrand"/>
+
+
             <ViewFlipper
                 android:layout_below="@id/brandflip2"
                 android:id="@+id/brandflip3"
@@ -65,6 +89,13 @@
                 android:layout_centerHorizontal="true">
 
             </ViewFlipper>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@id/brandflip3"
+                android:background="@color/viewbrand"/>
 
             <ViewFlipper
                 android:layout_below="@id/brandflip3"

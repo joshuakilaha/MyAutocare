@@ -57,6 +57,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         public TextView textViewName;
         public TextView textViewDescription;
         public TextView textViewPrice;
+        public ImageView Add;
         public ImageView imageView;
 
         public ImageViewHolder(View itemView) {
@@ -65,6 +66,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             textViewName = itemView.findViewById(R.id.text_view_name);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPrice = itemView.findViewById(R.id.text_view_price);
+            Add = itemView.findViewById(R.id.add_to_chart);
             imageView = itemView.findViewById(R.id.image_view_upload);
 
             itemView.setOnClickListener(this);
@@ -100,6 +102,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                     switch (item.getItemId()) {
                         case 1:
                             mListener.onWhatEverClick(position);
+
+                            Add.setVisibility(View.VISIBLE);
+
                             return true;
                         case 2:
                             mListener.onDeleteClick(position);

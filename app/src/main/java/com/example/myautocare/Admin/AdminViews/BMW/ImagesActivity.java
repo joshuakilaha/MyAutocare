@@ -15,8 +15,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +91,22 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     @Override
     public void onWhatEverClick(int position) {
         Toast.makeText(this, "Whatever click at position: " + position, Toast.LENGTH_SHORT).show();
+
+        Upload selectedItem = mUploads.get(position);
+        final String selectedKey = selectedItem.getKey();
+
+        StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
+
+        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                mDatabaseRef.child(selectedKey).removeValue();
+                Toast.makeText(ImagesActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
     }
 
     @Override
@@ -101,6 +120,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
             public void onSuccess(Void aVoid) {
                 mDatabaseRef.child(selectedKey).removeValue();
                 Toast.makeText(ImagesActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

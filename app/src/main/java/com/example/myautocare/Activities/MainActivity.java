@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -27,20 +28,25 @@ import com.example.myautocare.MenuActivities.Profile;
 import com.example.myautocare.MenuActivities.Settings;
 import com.example.myautocare.R;
 import com.example.myautocare.User.User;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "MainActivity";
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     NavigationView mNavigationView;
 
-    String first_name;
+    String first_name,email,id,last_name;
 
-    TextView user;
 
     /////webview////
     WebView webView;
     ProgressBar progressBar;
+
+
+    TextView nametextview,mail;
 
 
     @Override
@@ -48,47 +54,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        webView = findViewById(R.id.webview);
-        progressBar = findViewById(R.id.progress_barweb);
-
-       webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://www.carmagazine.co.uk/");
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                progressBar.setVisibility(View.VISIBLE);
-                setTitle("Loading...");
-                super.onPageStarted(view, url, favicon);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                progressBar.setVisibility(View.GONE);
-                setTitle(view.getTitle());
-                super.onPageFinished(view, url);
-            }
-        });
-
-        user = findViewById(R.id.user_first_name1);
-
-        try {
-
-            User user1 = new User();
-
-            first_name  = getIntent().getStringExtra("first_name");
-
-            user.setText(user1.getFirst_name());
-
-            //user.setText("hi" + user1.getFirst_name());
-        }
-        catch (Exception e){
-
-        }
-
-
+        nametextview = findViewById(R.id.user_first_name1);
 
 
 
@@ -104,25 +70,30 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
-    ////webview backpressed
-
-
-    @Override
-    public void onBackPressed() {
-        if (webView.canGoBack()){
-            webView.goBack();
-        }
-        else {
-
-            super.onBackPressed();
-        }
-
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(mToggle.onOptionsItemSelected(item)){
+
+            try {
+                nametextview = findViewById(R.id.user_first_name1);
+                mail = findViewById(R.id.useremail);
+
+                Intent intent = getIntent();
+                first_name = intent.getStringExtra("first_name");
+                last_name = intent.getStringExtra("last_name");
+                id = intent.getStringExtra("id_number");
+                email = intent.getStringExtra("email");
+
+                nametextview.setText(first_name);
+                mail.setText(email);
+
+                Toast.makeText(this, " Welcome " + first_name, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+
+
+            }
+
             return true;
         }
 
@@ -135,6 +106,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         switch (menuItem.getItemId()){
             case R.id.profile:
                 Intent profile = new Intent(MainActivity.this, Profile.class);
+
+                profile.putExtra("first_name", first_name);
+                profile.putExtra("last_name",last_name);
+                profile.putExtra("id_number",id);
+                profile.putExtra("email",email);
                 startActivity(profile);
 
                 Toast.makeText(MainActivity.this, "Profile opened", Toast.LENGTH_SHORT).show();

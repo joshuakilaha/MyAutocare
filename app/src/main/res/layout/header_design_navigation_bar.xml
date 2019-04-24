@@ -6,12 +6,12 @@
     android:background="@drawable/cover"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="75dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_marginTop="5dp"
-        android:src="@drawable/me"
-        />
+        android:src="@drawable/me"/>
+
 
     <TextView
         android:id="@+id/user_first_name1"
@@ -19,7 +19,9 @@
         android:layout_height="wrap_content"
         android:textColor="@color/whiteDesign"
         android:textStyle="italic"
+        android:textSize="20dp"
         android:layout_marginTop="5dp"/>
+
 
     <TextView
         android:id="@+id/useremail"
@@ -27,7 +29,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/whiteDesign"
         android:textStyle="italic"
-        android:text="joshua@gmail"
+        android:textSize="20dp"
         android:layout_marginTop="5dp"/>
 
 

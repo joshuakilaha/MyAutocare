@@ -32,7 +32,7 @@ import com.squareup.picasso.Picasso;
 
 public class Main2Activity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "Main2Activity";
 
     private static final int PICK_IMAGE_REQUEST = 1;
 

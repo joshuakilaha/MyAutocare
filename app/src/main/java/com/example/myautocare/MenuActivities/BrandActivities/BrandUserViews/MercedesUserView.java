@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.myautocare.Admin.AdminViews.BMW.ImageAdapter;
-import com.example.myautocare.Admin.AdminViews.BMW.ImagesActivity;
-import com.example.myautocare.Admin.AdminViews.BMW.Upload;
+import com.example.myautocare.Admin.AdminViews.Mercedes.ImageAdapterM;
+import com.example.myautocare.Admin.AdminViews.Mercedes.UploadM;
 import com.example.myautocare.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,23 +23,25 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BmwUserView extends AppCompatActivity  implements ImageAdapter.OnItemClickListener{
+public class MercedesUserView extends AppCompatActivity  implements ImageAdapterM.OnItemClickListener {
 
-    private RecyclerView mRecyclerView;
-    private ImageAdapter mAdapter;
+private RecyclerView mRecyclerView;
+private ImageAdapterM mAdapter;
 
-    private ProgressBar mProgressCircle;
+private ProgressBar mProgressCircle;
 
-    private FirebaseStorage mStorage;
-    private DatabaseReference mDatabaseRef;
-    private ValueEventListener mDBListener;
+private FirebaseStorage mStorage;
+private DatabaseReference mDatabaseRef;
+private ValueEventListener mDBListener;
 
-    private List<Upload> mUploads;
+private List<UploadM> mUploads;
 
-    @Override
+
+@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bmw_user_view);
+        setContentView(R.layout.activity_mercedes_user_view);
+
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -50,40 +51,39 @@ public class BmwUserView extends AppCompatActivity  implements ImageAdapter.OnIt
 
         mUploads = new ArrayList<>();
 
-        mAdapter = new ImageAdapter(BmwUserView.this, mUploads);
+        mAdapter = new ImageAdapterM(MercedesUserView.this, mUploads);
 
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(BmwUserView.this);
+        mAdapter.setOnItemClickListener(MercedesUserView.this);
 
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsBMW");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsMerc");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+@Override
+public void onDataChange(DataSnapshot dataSnapshot) {
 
-                mUploads.clear();
+        mUploads.clear();
 
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Upload upload = postSnapshot.getValue(Upload.class);
-                    upload.setKey(postSnapshot.getKey());
-                    mUploads.add(upload);
-                }
+        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+        UploadM upload = postSnapshot.getValue(UploadM.class);
+        upload.setKey(postSnapshot.getKey());
+        mUploads.add(upload);
+        }
 
-                mAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
 
-                mProgressCircle.setVisibility(View.INVISIBLE);
-            }
+        mProgressCircle.setVisibility(View.INVISIBLE);
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(BmwUserView.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                mProgressCircle.setVisibility(View.INVISIBLE);
-            }
+@Override
+public void onCancelled(DatabaseError databaseError) {
+        Toast.makeText(MercedesUserView.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+        mProgressCircle.setVisibility(View.INVISIBLE);
+        }
         });
-    }
-
+        }
     @Override
     public void onItemClick(int position) {
         Toast.makeText(this, "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
@@ -92,18 +92,15 @@ public class BmwUserView extends AppCompatActivity  implements ImageAdapter.OnIt
     @Override
     public void onWhatEverClick(int position) {
         Toast.makeText(this, "Whatever click at position: " + position, Toast.LENGTH_SHORT).show();
-
-
     }
 
     @Override
     public void onDeleteClick(int position) {
 
     }
-
-    @Override
-    protected void onDestroy() {
+@Override
+protected void onDestroy() {
         super.onDestroy();
         mDatabaseRef.removeEventListener(mDBListener);
-    }
-}
+        }
+        }

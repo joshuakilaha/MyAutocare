@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
     android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/logindesigns"
     tools:context=".MenuActivities.Profile">
 
-
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/design_navigation_view"
-        app:headerLayout="@layout/header_design_navigation_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:menu="@menu/drawermenu"
-        android:layout_gravity="start">
-
-    </android.support.design.widget.NavigationView>
 
 
     <LinearLayout
@@ -30,9 +21,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textStyle="bold"
             android:text="Profile"
             android:textSize="50dp"/>
 
+        <TextView
+            android:id="@+id/name1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:id="@+id/lastn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="30dp"/>
+
+
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+           android:layout_marginTop="10dp"
+            android:textSize="30dp"/>
+
+
+        <TextView
+            android:id="@+id/mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="30dp"/>
+
+
+
+
+
+
     </LinearLayout>
 
-</android.support.v4.widget.DrawerLayout>
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.myautocare.Admin.AdminViews.RangeRover;
+package com.example.myautocare.MenuActivities.BrandActivities.BrandUserViews;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.myautocare.Admin.AdminViews.BMW.ImageAdapter;
-import com.example.myautocare.Admin.AdminViews.BMW.Upload;
-import com.example.myautocare.Admin.AdminViews.Mercedes.ImageAdapterM;
+import com.example.myautocare.Admin.AdminViews.Toyota.ImageAdapterT;
+import com.example.myautocare.Admin.AdminViews.Toyota.ImagesToyotaActivity;
+import com.example.myautocare.Admin.AdminViews.Toyota.UploadT;
 import com.example.myautocare.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,10 +24,10 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImagesRangeActivity extends AppCompatActivity implements ImageAdapterR.OnItemClickListener{
+public class ToyotaUserView extends AppCompatActivity implements ImageAdapterT.OnItemClickListener{
 
     private RecyclerView mRecyclerView;
-    private ImageAdapterR mAdapter;
+    private ImageAdapterT mAdapter;
 
     private ProgressBar mProgressCircle;
 
@@ -35,13 +35,12 @@ public class ImagesRangeActivity extends AppCompatActivity implements ImageAdapt
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
 
-
-    private List<UploadR> mUploads;
+    private List<UploadT> mUploads;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_images_range);
+        setContentView(R.layout.activity_toyota_user_view);
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -51,14 +50,14 @@ public class ImagesRangeActivity extends AppCompatActivity implements ImageAdapt
 
         mUploads = new ArrayList<>();
 
-        mAdapter = new ImageAdapterR(ImagesRangeActivity.this, mUploads);
+        mAdapter = new ImageAdapterT(ToyotaUserView.this, mUploads);
 
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(ImagesRangeActivity.this);
+        mAdapter.setOnItemClickListener(ToyotaUserView.this);
 
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsRange");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsToyota");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,7 +66,7 @@ public class ImagesRangeActivity extends AppCompatActivity implements ImageAdapt
                 mUploads.clear();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    UploadR upload = postSnapshot.getValue(UploadR.class);
+                    UploadT upload = postSnapshot.getValue(UploadT.class);
                     upload.setKey(postSnapshot.getKey());
                     mUploads.add(upload);
                 }
@@ -79,7 +78,7 @@ public class ImagesRangeActivity extends AppCompatActivity implements ImageAdapt
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ImagesRangeActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ToyotaUserView.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
@@ -97,7 +96,7 @@ public class ImagesRangeActivity extends AppCompatActivity implements ImageAdapt
 
     @Override
     public void onDeleteClick(int position) {
-        UploadR selectedItem = mUploads.get(position);
+        UploadT selectedItem = mUploads.get(position);
         final String selectedKey = selectedItem.getKey();
 
         StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
@@ -105,7 +104,7 @@ public class ImagesRangeActivity extends AppCompatActivity implements ImageAdapt
             @Override
             public void onSuccess(Void aVoid) {
                 mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(ImagesRangeActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ToyotaUserView.this, "Item deleted", Toast.LENGTH_SHORT).show();
             }
         });
     }
