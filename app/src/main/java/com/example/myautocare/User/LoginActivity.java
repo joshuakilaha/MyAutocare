@@ -124,9 +124,26 @@ public class LoginActivity extends AppCompatActivity {
                 /////////move to main activity////
 
 
-                Textcheck();
-                new Login().execute();
+                String Email = email.getText().toString();
+                String Password = password.getText().toString();
 
+                if(TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password)){
+                    final AlertDialog.Builder alert = new
+                            AlertDialog.Builder(LoginActivity.this);
+                    alert.setTitle("Failed");
+                    alert.setMessage("Please fill in the details");
+                    alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(@NonNull DialogInterface dialog, int whichButton)
+                        {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+
+                } else {
+                    new Login().execute();
+
+                }
             }
         });
 
@@ -211,7 +228,8 @@ public class LoginActivity extends AppCompatActivity {
                         .appendQueryParameter("password", password.getText().toString().trim())
                         .appendQueryParameter("first_name", first_name.getText().toString().trim())
                         .appendQueryParameter("last_name", last_name.getText().toString().trim())
-                        .appendQueryParameter("id_number", id.getText().toString().trim());
+                        .appendQueryParameter("id_number", id.getText().toString().trim())
+                        .appendQueryParameter("password",password.getText().toString().trim());
 
 
                 query = builder.build().getEncodedQuery();
@@ -228,6 +246,7 @@ public class LoginActivity extends AppCompatActivity {
                 outputStreamWriter.write(query);
                 outputStreamWriter.flush();
             } catch (Exception e) {
+
                 android.util.Log.e("Fail 1", e.toString());
             }
             try {
@@ -252,8 +271,6 @@ public class LoginActivity extends AppCompatActivity {
                 int code = (json_data.getInt("code"));
                 if (code == 1) {
 
-
-
                     first_name.setText(json_data.getString("first_name"));
                     last_name.setText(json_data.getString("last_name"));
                     id.setText(json_data.getString("id_number"));
@@ -264,8 +281,8 @@ public class LoginActivity extends AppCompatActivity {
                       intent.putExtra("last_name",last_name.getText().toString());
                              intent.putExtra("id_number",id.getText().toString());
                              intent.putExtra("email",email.getText().toString());
+                             intent.putExtra("password",password.getText().toString());
                     startActivity(intent);
-
 
 
                 } else {

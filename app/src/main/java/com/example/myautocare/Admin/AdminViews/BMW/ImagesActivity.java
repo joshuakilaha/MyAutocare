@@ -1,5 +1,6 @@
 package com.example.myautocare.Admin.AdminViews.BMW;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +9,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.myautocare.MenuActivities.Brands;
 import com.example.myautocare.R;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,17 +98,20 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         Upload selectedItem = mUploads.get(position);
         final String selectedKey = selectedItem.getKey();
 
-        StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
 
-        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+
+/*
+        StorageReference fileReference = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
+
+        fileReference.putFile().addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(Void aVoid) {
-                mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(ImagesActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                mDatabaseRef.child(selectedKey).push();
+                Toast.makeText(ImagesActivity.this, "sent", Toast.LENGTH_SHORT).show();
 
             }
         });
-
+*/
 
     }
 

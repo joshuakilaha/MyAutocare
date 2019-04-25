@@ -37,17 +37,11 @@ import java.net.URL;
 
 public class Profile extends AppCompatActivity {
 
-  TextView name1, name2,idn,mail;
+    TextView name1, name2, idn, mail;
 
-  Button get;
+    Button changedetails;
 
-    String first_name,last_name,id,email;
-
-
-    JSONObject json_data;
-    HttpURLConnection con;
-    String query, results;
-    ProgressDialog mProgressDialog;
+    String first_name, last_name, id, email,password;
 
 
     @Override
@@ -55,6 +49,7 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        changedetails = findViewById(R.id.changedetails);
 
 
         try {
@@ -67,14 +62,15 @@ public class Profile extends AppCompatActivity {
             Intent intent = getIntent();
 
             first_name = intent.getStringExtra("first_name");
-             last_name = intent.getStringExtra("last_name");
-                    id = intent.getStringExtra("id_number");
-                    email = intent.getStringExtra("email");
+            last_name = intent.getStringExtra("last_name");
+            id = intent.getStringExtra("id_number");
+            email = intent.getStringExtra("email");
+            password = intent.getStringExtra("password");
 
-            name1.setText("First Name: "+ first_name);
-            name2.setText("Last Name: "+last_name);
-            idn.setText("Id Number: "+id);
-            mail.setText("Email: "+ email);
+            name1.setText("First Name: " + first_name);
+            name2.setText("Last Name: " + last_name);
+            idn.setText("Id Number: " + id);
+            mail.setText("Email: " + email);
 
             Toast.makeText(this, " Welcome " + first_name, Toast.LENGTH_SHORT).show();
 
@@ -84,97 +80,22 @@ public class Profile extends AppCompatActivity {
 
         }
 
+        changedetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Profile.this, Settings.class);
+                intent.putExtra("first_name",first_name);
+                intent.putExtra("last_name",last_name);
+                intent.putExtra("id_number",id);
+                intent.putExtra("email",email);
+                intent.putExtra("password",password);
+                startActivity(intent);
+            }
+        });
+
     }
-
-   /*
-    final class Login extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-
-            super.onPreExecute();
-            mProgressDialog = new ProgressDialog(Profile.this);
-            mProgressDialog.setMessage("Logging in, please wait...");
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
-        }
-        @Override
-        protected Void doInBackground(String... params) {
-            try {
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("email", email.getText().toString().trim())
-                        .appendQueryParameter("password", password.getText().toString().trim())
-                        .appendQueryParameter("first_name", firstn.getText().toString().trim())
-                        .appendQueryParameter("last_name",lastn.getText().toString().trim());
-
-
-                query = builder.build().getEncodedQuery();
-                String url = "https://beastly-defection.000webhostapp.com/AutoCare/profile.php";
-
-                URL obj = new URL(url);
-                con = (HttpURLConnection) obj.openConnection();
-                con.setRequestMethod("POST");
-                con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 7.0;Windows NT 5.1)");
-                con.setRequestProperty("Accept-Language", "UTF-8");
-                con.setDoOutput(true);
-                OutputStreamWriter outputStreamWriter = new
-                        OutputStreamWriter(con.getOutputStream());
-                outputStreamWriter.write(query);
-                outputStreamWriter.flush();
-            } catch (Exception e) {
-                android.util.Log.e("Fail 1", e.toString());
-            }
-            try {
-                BufferedReader in = new BufferedReader(new
-                        InputStreamReader(con.getInputStream()));
-                String line;
-                StringBuffer sb = new StringBuffer();
-                while ((line = in.readLine()) != null) {
-                    sb.append(line + "\n");
-                }
-                results = sb.toString();
-            } catch (Exception e) {
-                android.util.Log.e("Fail 2", e.toString());
-            }
-            return null;
-
-        }
-        @Override
-        protected void onPostExecute(Void result) {
-            try {
-                json_data = new JSONObject(results);
-                int code = (json_data.getInt("code"));
-                if (code == 1) {
-
-
-                    firstn.setText(json_data.getString("first_name"));
-                    lastn.setText(json_data.getString("last_name"));
-
-                } else {
-
-
-                    final AlertDialog.Builder alert = new
-                            AlertDialog.Builder(Profile.this);
-                    alert.setTitle("Failed");
-                    alert.setMessage(" Failed to log in ");
-                    alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                        public void onClick(@NonNull DialogInterface dialog, int whichButton)
-                        {
-                            dialog.cancel();
-                        }
-                    });
-                    alert.show();
-                }
-            } catch (Exception e) {
-                Log.e("Fail 3", e.toString());
-            }
-            mProgressDialog.dismiss();
-        }
-    }
-
-*/
-
 }
+
+
 

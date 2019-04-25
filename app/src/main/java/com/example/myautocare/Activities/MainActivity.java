@@ -1,5 +1,6 @@
 package com.example.myautocare.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,8 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,7 @@ import com.example.myautocare.MenuActivities.Mylocation;
 import com.example.myautocare.MenuActivities.Profile;
 import com.example.myautocare.MenuActivities.Settings;
 import com.example.myautocare.R;
+import com.example.myautocare.User.LoginActivity;
 import com.example.myautocare.User.User;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -38,8 +43,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private ActionBarDrawerToggle mToggle;
     NavigationView mNavigationView;
 
-    String first_name,email,id,last_name;
+    String first_name,email,id,last_name,password;
 
+    Button Read;
+    ImageView Cover;
 
     /////webview////
     WebView webView;
@@ -54,10 +61,52 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nametextview = findViewById(R.id.user_first_name1);
+
+
+        webView = findViewById(R.id.webview);
+        progressBar = findViewById(R.id.progress_barweb);
+
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("https://www.carmagazine.co.uk/");
+        webView.setVerticalScrollBarEnabled(true);
+        webView.setHorizontalScrollBarEnabled(true);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                progressBar.setVisibility(View.VISIBLE);
+                setTitle("Loading...");
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                progressBar.setVisibility(View.GONE);
+                super.onPageFinished(view, url);
+            }
+        });
 
 
 
+/*
+        Read = findViewById(R.id.readmore);
+        Cover = findViewById(R.id.coverphoto);
+
+        Cover.animate().scaleX(-2).scaleY(2).setDuration(5000).start();
+
+
+
+        Read.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Webview.class);
+                startActivity(intent);
+            }
+        });
+
+        */
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
@@ -72,6 +121,31 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
     @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()){
+            webView.goBack();
+        }
+        else {
+
+            super.onBackPressed();
+        }
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+       webView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+       webView.onPause();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(mToggle.onOptionsItemSelected(item)){
 
@@ -84,6 +158,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 last_name = intent.getStringExtra("last_name");
                 id = intent.getStringExtra("id_number");
                 email = intent.getStringExtra("email");
+                password = intent.getStringExtra("password");
 
                 nametextview.setText(first_name);
                 mail.setText(email);
@@ -111,6 +186,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 profile.putExtra("last_name",last_name);
                 profile.putExtra("id_number",id);
                 profile.putExtra("email",email);
+                profile.putExtra("password",password);
                 startActivity(profile);
 
                 Toast.makeText(MainActivity.this, "Profile opened", Toast.LENGTH_SHORT).show();
@@ -142,7 +218,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
             case R.id.settings:
                 Intent settings = new Intent(MainActivity.this, Settings.class);
+
+                settings.putExtra("first_name", first_name);
+                settings.putExtra("last_name",last_name);
+                settings.putExtra("id_number",id);
+                settings.putExtra("email",email);
+                settings.putExtra("password",password);
                 startActivity(settings);
+
                 Toast.makeText(MainActivity.this, "settings opened...", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -154,7 +237,40 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
             case R.id.logout:
 
-                Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+
+
+
+
+                final AlertDialog logout = new AlertDialog.Builder(MainActivity.this)
+                        .setMessage("Logout?")
+
+                        //.setIcon(R.drawable.ic_done_black_48dp) //will replace icon with name of existing icon from project
+                        .setCancelable(false)
+
+                        //set three option buttons
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                //Log out
+                                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(MainActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        })//setPositiveButton
+
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Do nothing
+                            }
+                        })
+
+                        .create();
+                logout.show();
+
+
                 break;
 
         }

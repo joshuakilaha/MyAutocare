@@ -23,6 +23,7 @@ public class SplashScreen extends AppCompatActivity {
        Splash.animate().scaleX(2).scaleY(2).setDuration(5000).start();
 
         int secondsDelayed = 1;
+
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 startActivity(new Intent(SplashScreen.this, LoginActivity.class));

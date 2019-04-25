@@ -60,6 +60,16 @@
             android:layout_marginTop="10dp"
             android:textSize="30dp"/>
 
+        <Button
+            android:id="@+id/changedetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/splashbtn"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:textColor="#FF4500"
+            android:text="Change Details"/>
+
 
 
 

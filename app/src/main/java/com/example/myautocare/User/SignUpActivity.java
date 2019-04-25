@@ -9,12 +9,14 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -77,10 +79,65 @@ public class SignUpActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String First_name = first_name.getText().toString();
+                String Last_name = last_name.getText().toString();
+                String Id = id.getText().toString();
+                String Email = email.getText().toString();
+                String Password = password.getText().toString();
+
+                if(TextUtils.isEmpty(First_name) || TextUtils.isEmpty(Last_name) ||
+                        TextUtils.isEmpty(Id)||TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password)){
+
+                    final AlertDialog.Builder alert = new
+                            AlertDialog.Builder(SignUpActivity.this);
+                    alert.setTitle("Failed");
+                    alert.setMessage("Please fill in the details");
+                    alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(@NonNull DialogInterface dialog, int whichButton)
+                        {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+
+                } else {
+                    new Signup().execute();
+
+                }
+
                 //////////////////////Signup/////////////////////////////
-                new Signup().execute();
+
             }
         });
+
+
+    }
+
+    public void CheckText(){
+
+        String First_name = first_name.getText().toString();
+        String Last_name = last_name.getText().toString();
+        String Id = id.getText().toString();
+        String Email = email.getText().toString();
+        String Password = password.getText().toString();
+
+        if(TextUtils.isEmpty(First_name) || TextUtils.isEmpty(Last_name) ||
+                TextUtils.isEmpty(Id)||TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password)){
+
+            final AlertDialog.Builder alert = new
+                    AlertDialog.Builder(SignUpActivity.this);
+            alert.setTitle("Failed");
+            alert.setMessage("Please fill in the details");
+            alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(@NonNull DialogInterface dialog, int whichButton)
+                {
+                    dialog.cancel();
+                }
+            });
+            alert.show();
+
+        }
 
 
     }

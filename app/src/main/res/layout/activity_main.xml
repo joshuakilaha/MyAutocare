@@ -9,6 +9,21 @@
     android:orientation="vertical"
     tools:context=".Activities.MainActivity">
 
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </WebView>
+
+    <ProgressBar
+        android:id="@+id/progress_barweb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
@@ -24,7 +39,6 @@
         app:menu="@menu/drawermenu"
         android:background="@drawable/logindesigns"
         android:layout_gravity="start">
-
 
 
 
